@@ -64,11 +64,5 @@ foreverLoop:
     inc    LATA               ; set pin RA0 high = 1 cycle
     bra foreverLoop
     
-;    nop
-;    nop
-;    clr LATA
-;    repeat #4
-;    nop
-;    inc LATA
-;    bra foreverLoop
+
 .end 
