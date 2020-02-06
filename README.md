@@ -1,2 +1,2 @@
 # EE2361Projects
-Git repository for dealing with 2361 stuff easier
+A repo with all of the MPLAB stuff to make this easier to deal with
