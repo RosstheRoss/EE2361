@@ -19,7 +19,7 @@ _wait_1ms:
     nop
     return
  
-_write_0:      ;2 cycles for function call
+_write_0:     ;2 cycles for function call
     inc LATA  ;1
     repeat #3 ;1 for load
     nop	      ;3+1=4 nop
@@ -29,7 +29,7 @@ _write_0:      ;2 cycles for function call
     return    ;3 return
     
     
-_write_1:      ;2 cycle call
+_write_1:     ;2 cycle call
     inc LATA  ;1
     repeat #10;1 load
     nop	      ;1+10=11 nop
