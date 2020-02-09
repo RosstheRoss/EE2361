@@ -1,4 +1,5 @@
 #include "xc.h"
+#include "lab2b_header.h"
 // CW1: FLASH CONFIGURATION WORD 1 (see PIC24 Family Reference Manual 24.1)
 #pragma config ICS = PGx1          // Comm Channel Select (Emulator EMUC1/EMUD1 pins are shared with PGC1/PGD1)
 #pragma config FWDTEN = OFF        // Watchdog Timer Enable (Watchdog Timer is disabled)
@@ -14,20 +15,94 @@
 #pragma config FCKSM = CSECME      // Clock Switching and Monitor (Clock switching is enabled, 
                                        // Fail-Safe Clock Monitor is enabled)
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
+#define PERIOD 5
 
 
 void setup(void) {
     CLKDIVbits.RCDIV = 0;  //Set RCDIV=1:1 (default 2:1) 32MHz or FCY/2=16M
+    AD1PCFG = 0x9fff;
+    TRISA = 0b1111111111111110;
+    TRISB = 0x0000;  
+    wait_100us();
 }
+void writeColor(int r, int g, int b);
 void loop(void);
+
 int main(void) {
     setup();
+    wait_100us();   
     loop();
     return 0;
 }
 
+void writeColor(int r, int g, int b) {
+    LATA = 0x0000;
+    wait_100us();
+    
+    for (int i = 0; i < 8; i++){
+        if (r & 1) {
+            write_1();
+        } else {
+            write_0();
+        }
+        r >> 1;
+    }
+    for (int j = 0; j < 8; j++){
+        if (g & 1) {
+            write_1();
+        } else {
+            write_0();
+        }
+        g >> 1;
+    }
+    for (int k = 0; k < 8; k++){
+        if (b & 1) {
+            write_1();
+        } else {
+            write_0();
+        }
+        b >> 1;
+    }
+}
+
 void loop(void) {
  while (1) {
-     //do nothing
+     LATA = 0x0000;
+     wait_100us();
+     
+     //RED
+     write_1();
+     write_1();
+     write_1();
+     write_1();
+     
+     write_1();
+     write_1();
+     write_1();
+     write_1();
+     
+     //GREEN
+     write_1();
+     write_0();
+     write_0();
+     write_1();
+     
+     write_1();
+     write_0();
+     write_1();
+     write_1();
+     
+     //BLUE
+     write_0();
+     write_0();
+     write_0();
+     write_0();
+     
+     write_0();
+     write_0();
+     write_0();
+     write_0();
+     
+     //writeColor(255, 155, 0);
  }
 }
