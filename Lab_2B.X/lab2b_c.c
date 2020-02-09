@@ -25,7 +25,7 @@ void setup(void) {
     TRISB = 0x0000;  
     wait_100us();
 }
-void writeColor(int r, int g, int b);
+void writeColor(short r, short g, short b);
 void loop(void);
 
 int main(void) {
@@ -35,8 +35,8 @@ int main(void) {
     return 0;
 }
 
-void writeColor(int r, int g, int b) {
-    int i = 0;
+void writeColor(short r, short g, short b) {
+    short i = 0;
     LATA = 0x0000;
     wait_100us();
     //RED
@@ -46,7 +46,7 @@ void writeColor(int r, int g, int b) {
         } else {
             write_0();
         }
-        r >> 1;
+        r >>= 1;
         ++i;
     }
     //GREEN
@@ -56,7 +56,7 @@ void writeColor(int r, int g, int b) {
         } else {
             write_0();
         }
-        g >> 1; 
+        g >>= 1; 
         --i;
     }
     //BLUE
@@ -66,7 +66,7 @@ void writeColor(int r, int g, int b) {
         } else {
             write_0();
         }
-        b >> 1;
+        b >>= 1;
         ++i;
     }
 }
@@ -108,7 +108,7 @@ void loop(void) {
 //     write_0();
 //     write_0();
 //     write_0();
-     
+//     
     writeColor(255, 155, 0);
  }
 }
