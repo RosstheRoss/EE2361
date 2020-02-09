@@ -109,6 +109,6 @@ void loop(void) {
 //     write_0();
 //     write_0();
 //     write_0();
-    writeColor(255, 155, 0);
+    writeColor(255, 155, 000);
  }
 }
