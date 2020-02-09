@@ -24,8 +24,8 @@ _write_0:     ;2 cycles for function call
     repeat #2 ;1 for load
     nop	      ;2+1=3 nop
     clr LATA  ;1
-    repeat #7 ;1 for load
-    nop       ;1+7=8 nop
+    repeat #6 ;1 for load
+    nop       ;1+6=7 nop
     return    ;3 return
     
     
@@ -34,6 +34,7 @@ _write_1:     ;2 cycle call
     repeat #8 ;1 load
     nop	      ;1+9=10 nop
     clr LATA  ;1
+    nop	      ;1
     nop	      ;1
     return    ;3 return
     
