@@ -67,42 +67,42 @@ void writeColor(int r, int g, int b) {
 
 void loop(void) {
  while (1) {
-     LATA = 0x0000;
-     wait_100us();
-     
-     //RED
-     write_1();
-     write_1();
-     write_1();
-     write_1();
-     
-     write_1();
-     write_1();
-     write_1();
-     write_1();
-     
-     //GREEN
-     write_1();
-     write_0();
-     write_0();
-     write_1();
-     
-     write_1();
-     write_0();
-     write_1();
-     write_1();
-     
-     //BLUE
-     write_0();
-     write_0();
-     write_0();
-     write_0();
-     
-     write_0();
-     write_0();
-     write_0();
-     write_0();
-     
-     //writeColor(255, 155, 0);
+     writeColor(255, 155, 0);
+     /* HARDCODED */
+//     LATA = 0x0000;
+//     wait_100us();
+//     
+//     //RED
+//     write_1();
+//     write_1();
+//     write_1();
+//     write_1();
+//     
+//     write_1();
+//     write_1();
+//     write_1();
+//     write_1();
+//     
+//     //GREEN
+//     write_1();
+//     write_0();
+//     write_0();
+//     write_1();
+//     
+//     write_1();
+//     write_0();
+//     write_1();
+//     write_1();
+//     
+//     //BLUE
+//     write_0();
+//     write_0();
+//     write_0();
+//     write_0();
+//     
+//     write_0();
+//     write_0();
+//     write_0();
+//     write_0();
  }
 }
