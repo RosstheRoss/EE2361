@@ -39,6 +39,7 @@ void writeColor(int r, int g, int b) {
     int i = 0;
     LATA = 0x0000;
     wait_100us();
+    //RED
     while (i < 8) {
         if (r & 1) {
             write_1();
@@ -48,6 +49,7 @@ void writeColor(int r, int g, int b) {
         r >> 1;
         ++i;
     }
+    //GREEN
     while (i > 0) {
         if (g & 1) {
             write_1();
@@ -57,6 +59,7 @@ void writeColor(int r, int g, int b) {
         g >> 1; 
         --i;
     }
+    //BLUE
     while (i < 8){
         if (b & 1) {
             write_1();
