@@ -36,73 +36,76 @@ int main(void) {
 }
 
 void writeColor(int r, int g, int b) {
+    int i = 0;
     LATA = 0x0000;
     wait_100us();
-    
-    for (int i = 0; i < 8; i++){
+    while (i < 8) {
         if (r & 1) {
             write_1();
         } else {
             write_0();
         }
         r >> 1;
+        ++i;
     }
-    for (int j = 0; j < 8; j++){
+    while (i > 0) {
         if (g & 1) {
             write_1();
         } else {
             write_0();
         }
-        g >> 1;
+        g >> 1; 
+        --i;
     }
-    for (int k = 0; k < 8; k++){
+    while (i < 8){
         if (b & 1) {
             write_1();
         } else {
             write_0();
         }
         b >> 1;
+        ++i;
     }
 }
 
 void loop(void) {
  while (1) {
-     LATA = 0x0000;
-     wait_100us();
+//     LATA = 0x0000;
+//     wait_100us();
+//     
+//     //RED
+//     write_1();
+//     write_1();
+//     write_1();
+//     write_1();
+//     
+//     write_1();
+//     write_1();
+//     write_1();
+//     write_1();
+//     
+//     //GREEN
+//     write_1();
+//     write_0();
+//     write_0();
+//     write_1();
+//     
+//     write_1();
+//     write_0();
+//     write_1();
+//     write_1();
+//     
+//     //BLUE
+//     write_0();
+//     write_0();
+//     write_0();
+//     write_0();
+//     
+//     write_0();
+//     write_0();
+//     write_0();
+//     write_0();
      
-     //RED
-     write_1();
-     write_1();
-     write_1();
-     write_1();
-     
-     write_1();
-     write_1();
-     write_1();
-     write_1();
-     
-     //GREEN
-     write_1();
-     write_0();
-     write_0();
-     write_1();
-     
-     write_1();
-     write_0();
-     write_1();
-     write_1();
-     
-     //BLUE
-     write_0();
-     write_0();
-     write_0();
-     write_0();
-     
-     write_0();
-     write_0();
-     write_0();
-     write_0();
-     
-     //writeColor(255, 155, 0);
+    writeColor(255, 155, 0);
  }
 }
