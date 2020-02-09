@@ -9,12 +9,12 @@
 ; underscore (_) and be included in a comment delimited list below.
 .global _write_0, _write_1, _wait_100us, _wait_1ms
     
-_delay_100us:
+_wait_100us:
     repeat #1593
     nop
     return
     
-_delay_1ms:
+_wait_1ms:
     repeat #15993
     nop
     return
