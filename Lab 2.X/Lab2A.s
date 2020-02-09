@@ -31,8 +31,10 @@ _main:
     mov     w0,AD1PCFG            ; Set all pins to digital mode
     mov     #0b1111111111111110,w0  
     mov     w0,TRISA            ; set pin RA0 to output
-    mov     #0x0001,w0  
-    mov     w0,LATA            ; set pin RA0 high
+    mov     #0x0000,w0  
+    mov     w0,LATA            ; set pin RA0 low
+    call delay_100us
+    call setColor
     call foreverLoop
    
 wait_24cycles:
@@ -56,12 +58,65 @@ delay_1ms:
     nop
     return
     
-foreverLoop:
-
+write_bit_stream:
     call    wait_24cycles     ; 24 cycles
     clr     LATA              ; set pin RA0 low = 1 cycle
     call    wait_32cycles     ; 32 cycles
     inc    LATA               ; set pin RA0 high = 1 cycle
+    return
+
+write_0:      ;2 cycles for function call
+    inc LATA  ;1
+    repeat #3 ;1 for load
+    nop	      ;3+1=4 nop
+    clr LATA  ;1
+    repeat #6 ;1 for load
+    nop       ;1+6=7 nop
+    return    ;3 return
+    
+    
+write_1:      ;2 cycle call
+    inc LATA  ;1
+    repeat #10;1 load
+    nop	      ;1+10=11 nop
+    clr LATA  ;1
+    nop       ;1
+    return    ;3 return
+    
+setColor:
+    ;Set R
+    call write_1
+    call write_1
+    call write_1
+    call write_1
+    call write_1
+    call write_1
+    call write_1
+    call write_1
+    ;Set G
+    call write_1
+    call write_0
+    call write_0
+    call write_1
+    call write_1
+    call write_0
+    call write_1
+    call write_1
+    ;Set B
+    call write_0
+    call write_0
+    call write_0
+    call write_0
+    call write_0
+    call write_0
+    call write_0
+    call write_0
+    
+    return
+    
+foreverLoop:
+;   call write_bit_stream
+    nop
     bra foreverLoop
     
 
