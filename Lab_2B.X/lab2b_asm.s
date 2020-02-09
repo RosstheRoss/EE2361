@@ -36,3 +36,4 @@ _write_1:      ;2 cycle call
     clr LATA  ;1
     nop       ;1
     return    ;3 return
+    
