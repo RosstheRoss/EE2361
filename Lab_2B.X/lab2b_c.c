@@ -16,7 +16,7 @@
 #pragma config FCKSM = CSECME      // Clock Switching and Monitor (Clock switching is enabled, 
                                        // Fail-Safe Clock Monitor is enabled)
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
-#define PERIOD 20
+#define PERIOD 30
 
 //DEFINTIONS
 void writeColor(int r, int g, int b);
@@ -113,10 +113,9 @@ void writeColor(int r, int g, int b) {
 }
 
 void delay(int delay_in_ms) {
-    int i = 0;
-    while (i < delay_in_ms) {
+    int i;
+    for (i = 0; i < delay_in_ms; i++) {
         wait_1ms();
-        i++;
     }
 }
 
