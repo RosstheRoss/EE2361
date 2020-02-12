@@ -1,5 +1,6 @@
 #include "xc.h"
 #include "lab2b_header.h"
+#include "stdint.h"
 // CW1: FLASH CONFIGURATION WORD 1 (see PIC24 Family Reference Manual 24.1)
 #pragma config ICS = PGx1          // Comm Channel Select (Emulator EMUC1/EMUD1 pins are shared with PGC1/PGD1)
 #pragma config FWDTEN = OFF        // Watchdog Timer Enable (Watchdog Timer is disabled)
@@ -15,8 +16,18 @@
 #pragma config FCKSM = CSECME      // Clock Switching and Monitor (Clock switching is enabled, 
                                        // Fail-Safe Clock Monitor is enabled)
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
-#define PERIOD 5
+#define PERIOD 120
 
+//DEFINTIONS
+void writeColor(int r, int g, int b);
+void loop(void);
+void delay(int delay_in_ms);
+uint32_t packColor(unsigned char Red, unsigned char Grn, unsigned char Blu);
+unsigned char getR(uint32_t RGBval);
+unsigned char getG(uint32_t RGBval);
+unsigned char getB(uint32_t RGBval);
+void writePacCol(uint32_t PackedColor);
+uint32_t Wheel(unsigned char WheelPos);
 
 void setup(void) {
     CLKDIVbits.RCDIV = 0;  //Set RCDIV=1:1 (default 2:1) 32MHz or FCY/2=16M
@@ -25,51 +36,12 @@ void setup(void) {
     TRISB = 0x0000;  
     wait_100us();
 }
-void writeColor(short r, short g, short b);
-void loop(void);
 
 int main(void) {
     setup();
     wait_100us();   
     loop();
     return 0;
-}
-
-void writeColor(short r, short g, short b) {
-    short i = 0;
-    LATA = 0x0000;
-    wait_100us();
-    //RED
-    while (i < 8) {
-        if (r & 1) {
-            write_1();
-        } else {
-            write_0();
-        }
-
-        r >>= 1;
-        ++i;
-    }
-    //GREEN
-    while (i > 0) {
-        if (g & 1) {
-            write_1();
-        } else {
-            write_0();
-        }
-        g >>= 1; 
-        --i;
-    }
-    //BLUE
-    while (i < 8){
-        if (b & 1) {
-            write_1();
-        } else {
-            write_0();
-        }
-        b >>= 1;
-        ++i;
-    }
 }
 
 void loop(void) {
@@ -109,6 +81,95 @@ void loop(void) {
 //     write_0();
 //     write_0();
 //     write_0();
+/*
     writeColor(255, 155, 000);
+*/
+     int byteFrameNumber = 0;
+     while (byteFrameNumber <= 255) {
+//       // COLOR GRADIENT
+//       writeColor(byteFrameNumber, 0 , 255 - byteFrameNumber);
+         //COLOR WHEEL
+         writePacCol(Wheel(byteFrameNumber));
+         delay(PERIOD);
+         byteFrameNumber++;
+     }
  }
+}
+
+void writeColor(int r, int g, int b) {
+    short i = 0;
+    LATA = 0x0000;
+    wait_100us();
+    //RED
+    while (i < 8) {
+        if (r & 1) {
+            write_1();
+        } else {
+            write_0();
+        }
+
+        r >>= 1;
+        ++i;
+    }
+    //GREEN
+    while (i > 0) {
+        if (g & 1) {
+            write_1();
+        } else {
+            write_0();
+        }
+        g >>= 1; 
+        --i;
+    }
+    //BLUE
+    while (i < 8){
+        if (b & 1) {
+            write_1();
+        } else {
+            write_0();
+        }
+        b >>= 1;
+        ++i;
+    }
+}
+
+void delay(int delay_in_ms) {
+    int i = 0;
+    while (i < delay_in_ms) {
+        wait_1ms();
+        i++;
+    }
+}
+
+uint32_t packColor(unsigned char Red, unsigned char Grn, unsigned char Blu) {
+    return ((long) Red << 16) | ((long) Grn << 8) | ((long) Blu);
+}
+
+unsigned char getR(uint32_t RGBval) {
+    return (unsigned char) (RGBval >> 16);
+}
+unsigned char getG(uint32_t RGBval) {
+    return (unsigned char) (RGBval >> 8 );
+}
+unsigned char getB(uint32_t RGBval) {
+    return (unsigned char) (RGBval >> 0 );
+}
+
+void writePacCol(uint32_t PackedColor) {
+    writeColor(getR(PackedColor), getG(PackedColor), getB(PackedColor));
+}
+
+uint32_t Wheel(unsigned char WheelPos) {
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    return packColor(255 - WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos -= 85;
+    return packColor(0, WheelPos * 3, 255 - WheelPos * 3);
+  }
+  WheelPos -= 170;
+  return packColor(WheelPos * 3, 255 - WheelPos * 3, 0);
 }
