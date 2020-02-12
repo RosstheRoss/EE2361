@@ -16,7 +16,7 @@
 #pragma config FCKSM = CSECME      // Clock Switching and Monitor (Clock switching is enabled, 
                                        // Fail-Safe Clock Monitor is enabled)
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
-#define PERIOD 200
+#define PERIOD 20
 
 //DEFINTIONS
 void writeColor(int r, int g, int b);
@@ -34,7 +34,7 @@ void setup(void) {
     AD1PCFG = 0x9fff;
     TRISA = 0b1111111111111110;
     TRISB = 0x0000;  
-    wait_100us();
+    wait_1ms();
 }
 
 int main(void) {
@@ -88,6 +88,7 @@ void loop(void) {
      while (byteFrameNumber <= 255) {
 //       // COLOR GRADIENT
 //       writeColor(byteFrameNumber, 0 , 255 - byteFrameNumber);
+         
          //COLOR WHEEL
          writePacCol(Wheel(byteFrameNumber));
          delay(PERIOD);
@@ -97,39 +98,17 @@ void loop(void) {
 }
 
 void writeColor(int r, int g, int b) {
-    short i = 0;
-    LATA = 0x0000;
+    write_0();
     wait_100us();
-    //RED
-    while (i < 8) {
-        if (r & 1) {
-            write_1();
-        } else {
-            write_0();
-        }
-
-        r >>= 1;
-        ++i;
+    int i;
+    for(i = 7; i >= 0; i--) {
+	r & (1 << i) ? write_1() : write_0();
     }
-    //GREEN
-    while (i > 0) {
-        if (g & 1) {
-            write_1();
-        } else {
-            write_0();
-        }
-        g >>= 1; 
-        --i;
+    for(i = 7; i >= 0; i--) {
+	g & (1 << i) ? write_1() : write_0();
     }
-    //BLUE
-    while (i < 8){
-        if (b & 1) {
-            write_1();
-        } else {
-            write_0();
-        }
-        b >>= 1;
-        ++i;
+    for(i = 7; i >= 0; i--) {
+	b & (1 << i) ? write_1() : write_0();
     }
 }
 
