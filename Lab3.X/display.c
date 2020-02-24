@@ -2,17 +2,11 @@
 #include "display.h"
 //Functions used for Display
 
-
-void delay(long num) {
-    long i;
-    for (i; i < num; i++) {
-            asm("nop");
-        }
-}
 void init7seg(void) { 
     TRISB = 0b0000000000000011;  //and port B to outputs
     LATB = 0x0000;               //and all of port B to LOW
 }
+
 void showChar7seg(char myChar, enum DIGIT myDigit) {
     LATB &= 0x00;
     switch (myChar) {
@@ -65,7 +59,7 @@ void showChar7seg(char myChar, enum DIGIT myDigit) {
             LATB ^= (0b01110001 << 2);
             break;
         default:
-            LATB ^= (0b1010001 << 2);
+            LATB ^= (0b11111111 << 2);
             break;
     }   //END OF SWITCH
     LATB |= myDigit;

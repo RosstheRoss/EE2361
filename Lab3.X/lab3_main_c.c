@@ -17,6 +17,11 @@
                                        // Fail-Safe Clock Monitor is enabled)
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
 
+void delay(long n) {
+    for (n=n; n>0; n--) {
+            asm("nop");
+        }
+}
 
 void setup(void) {
     CLKDIVbits.RCDIV = 0;  //Set RCDIV=1:1 (default 2:1) 32MHz or FCY/2=16M
@@ -27,11 +32,17 @@ void setup(void) {
 
 int main(void) {
     setup();
+    char right, left, temp;
     while (1) {
-        showChar7seg('1', LSB);
-        delay(170);        
-        showChar7seg('0', MSB);
-        delay(170);
+        temp = readKeyPadRAW();
+        if (temp != '\0') {
+            left = right;
+            right = temp;
+        }
+        showChar7seg(right, LSB);
+        delay(200);        
+        showChar7seg(left, MSB);
+        delay(200);
     }
 }
 
