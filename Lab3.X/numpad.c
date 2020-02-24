@@ -17,8 +17,9 @@ void padDelay(long n) {
 char readKeyPadRAW(void) {
     int i; 
     char num;
-    num = (!_RB15 << 3) | (!_RB14 << 2) | (!_RB13 << 1) | !_RB12;
+    num = '\0'
     LATB |= (0b1111 << 12);
+    padDelay(5);
     for (i = 0; i < 4; i++) {
         LATB ^= 0b1 << (15 - i);
         padDelay(10);
