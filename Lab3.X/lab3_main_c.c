@@ -50,7 +50,7 @@ int main(void) {
         }
         showChar7seg(right, MSB);
         delay(200);        
-        showChar7seg(left, L4SB);
+        showChar7seg(left, LSB);
         delay(200);
         debounce++;
     }
