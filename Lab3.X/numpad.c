@@ -20,6 +20,7 @@ char readKeyPadRAW(void) {
 //0
     num = (_RA0 << 3) | (_RA1 << 2) | (_RA2 << 1) | _RA3;
     LATB |= (0b1111 << 12);
+    padDelay(5);
     for (i = 0; i < 4; i++) {
         LATB ^= 0b1 << (15 - i);
         padDelay(10);
