@@ -26,6 +26,11 @@ void delay(long n) {
 void setup(void) {
     CLKDIVbits.RCDIV = 0;  //Set RCDIV=1:1 (default 2:1) 32MHz or FCY/2=16M
     AD1PCFG = 0x9fff;      //sets all pins to digital I/O
+//    T1CON = 0;    
+//    PR1 = 15999;    
+//    TMR1 = 0;    
+//    IFS0bits.T1IF = 0;    
+//    T1CONbits.TON = 1;
     init7seg();
     initKeyPad();
 }
@@ -33,16 +38,21 @@ void setup(void) {
 int main(void) {
     setup();
     char right, left, temp;
+    unsigned long debounce = 0;
     while (1) {
-        temp = readKeyPadRAW();
+        if (debounce % 300 == 0)
+            temp = readKeyPadRAW();
+        else
+            temp = '\0';
         if (temp != '\0') {
             left = right;
             right = temp;
         }
-        showChar7seg(right, LSB);
+        showChar7seg(right, MSB);
         delay(200);        
-        showChar7seg(left, MSB);
+        showChar7seg(left, L4SB);
         delay(200);
+        debounce++;
     }
 }
 

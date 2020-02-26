@@ -17,7 +17,8 @@ void padDelay(long n) {
 char readKeyPadRAW(void) {
     int i; 
     char num;
-    num = (!_RB15 << 3) | (!_RB14 << 2) | (!_RB13 << 1) | !_RB12;
+//0
+    num = (_RA0 << 3) | (_RA1 << 2) | (_RA2 << 1) | _RA3;
     LATB |= (0b1111 << 12);
     for (i = 0; i < 4; i++) {
         LATB ^= 0b1 << (15 - i);
@@ -34,7 +35,7 @@ char readKeyPadRAW(void) {
                     case 0b1011:
                         return '2';
                         break;
-                    case 0b111:
+                    case 0b0111:
                         return '1';
                         break;
                 } break;
@@ -49,7 +50,7 @@ char readKeyPadRAW(void) {
                     case 0b1011:
                         return '5';
                         break;
-                    case 0b111:
+                    case 0b0111:
                         return '4';
                         break;
                 } break;
@@ -64,7 +65,7 @@ char readKeyPadRAW(void) {
                     case 0b1011:
                         return '8';
                         break;
-                    case 0b111:
+                    case 0b0111:
                         return '7';
                         break;
                 } break;
@@ -79,7 +80,7 @@ char readKeyPadRAW(void) {
                     case 0b1011:
                         return '0';
                         break;
-                    case 0b111:
+                    case 0b0111:
                         return 'F';
                         break;
                 } break;
