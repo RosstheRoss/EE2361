@@ -14,23 +14,23 @@
 #pragma config IOL1WAY = OFF       // IOLOCK Protection (IOLOCK may be changed via unlocking seq)
 #pragma config OSCIOFNC = ON       // Primary Oscillator I/O Function (CLKO/RC15 functions as I/O pin)
 #pragma config FCKSM = CSECME      // Clock Switching and Monitor (Clock switching is enabled, 
-                                       // Fail-Safe Clock Monitor is enabled)
+// Fail-Safe Clock Monitor is enabled)
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
 
 void delay(long n) {
-    for (n=n; n>0; n--) {
-            asm("nop");
-        }
+    for (n = n; n > 0; n--) {
+        asm("nop");
+    }
 }
 
 void setup(void) {
-    CLKDIVbits.RCDIV = 0;  //Set RCDIV=1:1 (default 2:1) 32MHz or FCY/2=16M
-    AD1PCFG = 0x9fff;      //sets all pins to digital I/O
-//    T1CON = 0;    
-//    PR1 = 15999;    
-//    TMR1 = 0;    
-//    IFS0bits.T1IF = 0;    
-//    T1CONbits.TON = 1;
+    CLKDIVbits.RCDIV = 0; //Set RCDIV=1:1 (default 2:1) 32MHz or FCY/2=16M
+    AD1PCFG = 0x9fff; //sets all pins to digital I/O
+    //    T1CON = 0;    
+    //    PR1 = 15999;    
+    //    TMR1 = 0;    
+    //    IFS0bits.T1IF = 0;    
+    //    T1CONbits.TON = 1;
     init7seg();
     initKeyPad();
 }
@@ -49,7 +49,7 @@ int main(void) {
             right = temp;
         }
         showChar7seg(right, MSB);
-        delay(200);        
+        delay(200);
         showChar7seg(left, LSB);
         delay(200);
         debounce++;

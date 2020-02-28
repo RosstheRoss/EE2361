@@ -7,9 +7,9 @@
 extern "C" {
 #endif /* __cplusplus */
 
-  // Insert declarations
+    // Insert declarations
     void initKeyPad(void);
-    unsigned int readKeyPadRAW(void);
+    char readKeyPadRAW(void);
 
 #ifdef	__cplusplus
 }

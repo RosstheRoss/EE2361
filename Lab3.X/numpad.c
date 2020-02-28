@@ -1,106 +1,64 @@
 #include "xc.h"
+
 void initKeyPad(void) {
-    TRISA = 0b0000000000011111;  //set port A to inputs, 
-    LATA = 0x0000;               //Set all of port A to LOW
-    CNPU1bits.CN11PUE = 1;
-    CNPU1bits.CN12PUE = 1;
-    CNPU1bits.CN13PUE = 1;
-    CNPU1bits.CN14PUE = 1;
+    AD1PCFG = 0x9fff; //sets all pins to digital I/O
+    TRISA = 0b0000000000011111; //set port A to inputs, 
+    TRISB = 0b0000000000000011; //and port B to outputs
+    LATA = 0xFFFF; //Set all of port A to HIGH
+    LATB = 0xF000; //Set RB12-15 to high, no touch rest of RB
+    CNPU1bits.CN2PUE = 1; //RA0
+    CNPU1bits.CN3PUE = 1; //RA1
+    CNPU2bits.CN30PUE = 1; //RA2
+    CNPU2bits.CN29PUE = 1; //RA3
+    T1CON = 0;
+    PR1 = 15999;
+    TMR1 = 0;
+    IFS0bits.T1IF = 0;
+    T1CONbits.TON = 1;
 }
+
 void padDelay(long n) {
-    for (n=n; n>0; n--) {
-            asm("nop");
-        }
+    for (n = n; n > 0; n--) {
+        asm("nop");
+    }
 }
 //  1   2   3   4   5       6       7       8
 //  RA0 RA1 RA2 RA3 RB15    RB14    RB13    RB12
+
 char readKeyPadRAW(void) {
-    int i; 
-    char num;
-//0
-    num = (_RA0 << 3) | (_RA1 << 2) | (_RA2 << 1) | _RA3;
-    LATB |= (0b1111 << 12);
-    padDelay(5);
-    for (i = 0; i < 4; i++) {
-        LATB ^= 0b1 << (15 - i);
-        padDelay(10);
-        switch (i) {
-            case 0:
-                switch (num) {
-                    case 0b1110:
-                        return 'A';
-                        break;
-                    case 0b1101:
-                        return '3';
-                        break;
-                    case 0b1011:
-                        return '2';
-                        break;
-                    case 0b0111:
-                        return '1';
-                        break;
-                } break;
-            case 1:
-                switch (num) {
-                    case 0b1110:
-                        return 'b';
-                        break;
-                    case 0b1101:
-                        return '6';
-                        break;
-                    case 0b1011:
-                        return '5';
-                        break;
-                    case 0b0111:
-                        return '4';
-                        break;
-                } break;
-            case 2:
-                switch (num) {
-                    case 0b1110:
-                        return 'C';
-                        break;
-                    case 0b1101:
-                        return '9';
-                        break;
-                    case 0b1011:
-                        return '8';
-                        break;
-                    case 0b0111:
-                        return '7';
-                        break;
-                } break;
-            case 3:
-                switch (num) {
-                    case 0b1110:
-                        return 'd';
-                        break;
-                    case 0b1101:
-                        return 'E';
-                        break;
-                    case 0b1011:
-                        return '0';
-                        break;
-                    case 0b0111:
-                        return 'F';
-                        break;
-                } break;
-        }   //END switch(i);
-        LATB |= (0b1111 << 12);
+    if ((PORTAbits.RA0 || LATBbits.LATB12) == 0) {
+        return 'A';
+    } else if ((PORTAbits.RA1 || LATBbits.LATB12) == 0) {
+        return '3';
+    } else if ((PORTAbits.RA2 || LATBbits.LATB12) == 0) {
+        return '2';
+    } else if ((PORTAbits.RA3 || LATBbits.LATB12) == 0) {
+        return '1';
+    } else if ((PORTAbits.RA0 || LATBbits.LATB13) == 0) {
+        return 'b';
+    } else if ((PORTAbits.RA1 || LATBbits.LATB13) == 0) {
+        return '6';
+    } else if ((PORTAbits.RA2 || LATBbits.LATB13) == 0) {
+        return '5';
+    } else if ((PORTAbits.RA3 || LATBbits.LATB13) == 0) {
+        return '4';
+    } else if ((PORTAbits.RA0 || LATBbits.LATB14) == 0) {
+        return 'C';
+    } else if ((PORTAbits.RA1 || LATBbits.LATB14) == 0) {
+        return '9';
+    } else if ((PORTAbits.RA2 || LATBbits.LATB14) == 0) {
+        return '8';
+    } else if ((PORTAbits.RA3 || LATBbits.LATB14) == 0) {
+        return '7';
+    } else if ((PORTAbits.RA0 || LATBbits.LATB15) == 0) {
+        return 'd';
+    } else if ((PORTAbits.RA1 || LATBbits.LATB15) == 0) {
+        return 'F';
+    } else if ((PORTAbits.RA2 || LATBbits.LATB15) == 0) {
+        return '0';
+    } else if ((PORTAbits.RA3 || LATBbits.LATB15) == 0) {
+        return 'E';
+    } else {
+        return 'N';
     }
-    return '\0';
 }
-/*
-Outputs<8:5> = 0b0111;  // Set Row 1 output Low
-delay(1us);             // this delay could be lower, probably 2-3 cycles
-RowOne = Inputs<4:1>;   // returns 0b1111 (no buttons pressed in row 1)
-
-Outputs<8:5> = 0b1011;  // Set Row 2 output Low
-delay(1us);
-RowTwo = Inputs<4:1>;   // returns 0b1101 (the ?6? key was pressed!)
-...
-Outputs<8:5> = 0b1110;  // Set Row 4 output Low
-delay(1us);
-RowFour = Inputs<4:1>;  // returns 0b1111 (no buttons pressed in row 4)
-
- */

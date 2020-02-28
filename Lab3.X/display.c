@@ -2,9 +2,13 @@
 #include "display.h"
 //Functions used for Display
 
-void init7seg(void) { 
-    TRISB = 0b0000000000000011;  //and port B to outputs
-    LATB = 0x0000;               //and all of port B to LOW
+void init7seg(void) {
+    CLKDIVbits.RCDIV = 0; //Set RCDIV=1:1 (default 2:1) 32MHz or FCY/2=16M
+    AD1PCFG = 0x9fff; //sets all pins to digital I/O
+    TRISA = 0b0000000000011111; //set port A to inputs, 
+    TRISB = 0b0000000000000011; //and port B to outputs
+    LATA = 0x0000; //Set all of port A to LOW
+    LATB = 0x0000; //and all of port B to LOW
 }
 
 void showChar7seg(char myChar, enum DIGIT myDigit) {
@@ -61,6 +65,6 @@ void showChar7seg(char myChar, enum DIGIT myDigit) {
         default:
             LATB ^= (0b11111111 << 2);
             break;
-    }   //END OF SWITCH
+    } //END OF SWITCH
     LATB |= myDigit;
 }
