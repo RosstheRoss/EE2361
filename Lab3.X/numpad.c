@@ -10,11 +10,11 @@ void initKeyPad(void) {
     CNPU1bits.CN3PUE = 1; //RA1
     CNPU2bits.CN30PUE = 1; //RA2
     CNPU2bits.CN29PUE = 1; //RA3
-    T1CON = 0;
-    PR1 = 15999;
-    TMR1 = 0;
-    IFS0bits.T1IF = 0;
-    T1CONbits.TON = 1;
+//    T1CON = 0;
+//    PR1 = 15999;
+//    TMR1 = 0;
+//    IFS0bits.T1IF = 0;
+//    T1CONbits.TON = 1;
 }
 
 void padDelay(long n) {
