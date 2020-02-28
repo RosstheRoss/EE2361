@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>LAB_2B</name>
-            <creation-uuid>ad7fe9ed-f02a-439c-9233-24f02477fa64</creation-uuid>
+            <name>Lab_2B</name>
+            <creation-uuid>d27e1e53-621b-410a-8a6c-a6ea3346788a</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
@@ -25,5 +25,8 @@
                 <project-formatting-style>false</project-formatting-style>
             </formatting>
         </data>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>colours</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>

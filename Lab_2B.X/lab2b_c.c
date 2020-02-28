@@ -14,101 +14,90 @@
 #pragma config IOL1WAY = OFF       // IOLOCK Protection (IOLOCK may be changed via unlocking seq)
 #pragma config OSCIOFNC = ON       // Primary Oscillator I/O Function (CLKO/RC15 functions as I/O pin)
 #pragma config FCKSM = CSECME      // Clock Switching and Monitor (Clock switching is enabled, 
-                                       // Fail-Safe Clock Monitor is enabled)
+// Fail-Safe Clock Monitor is enabled)
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
 #define PERIOD 30
 
-//DEFINTIONS
-void writeColor(int r, int g, int b);
-void loop(void);
-void delay(int delay_in_ms);
-uint32_t packColor(unsigned char Red, unsigned char Grn, unsigned char Blu);
-unsigned char getR(uint32_t RGBval);
-unsigned char getG(uint32_t RGBval);
-unsigned char getB(uint32_t RGBval);
-void writePacCol(uint32_t PackedColor);
-uint32_t Wheel(unsigned char WheelPos);
-
 void setup(void) {
-    CLKDIVbits.RCDIV = 0;  //Set RCDIV=1:1 (default 2:1) 32MHz or FCY/2=16M
+    CLKDIVbits.RCDIV = 0; //Set RCDIV=1:1 (default 2:1) 32MHz or FCY/2=16M
     AD1PCFG = 0x9fff;
     TRISA = 0b1111111111111110;
-    TRISB = 0x0000;  
+    TRISB = 0x0000;
     wait_1ms();
 }
 
 int main(void) {
     setup();
-    wait_100us();   
+    wait_100us();
     loop();
     return 0;
 }
 
 void loop(void) {
- while (1) {
-//     LATA = 0x0000;
-//     wait_100us();
-//     
-//     //RED
-//     write_1();
-//     write_1();
-//     write_1();
-//     write_1();
-//     
-//     write_1();
-//     write_1();
-//     write_1();
-//     write_1();
-//     
-//     //GREEN
-//     write_1();
-//     write_0();
-//     write_0();
-//     write_1();
-//     
-//     write_1();
-//     write_0();
-//     write_1();
-//     write_1();
-//     
-//     //BLUE
-//     write_0();
-//     write_0();
-//     write_0();
-//     write_0();
-//     
-//     write_0();
-//     write_0();
-//     write_0();
-//     write_0();
-/*
-    writeColor(255, 155, 000);
-*/
-     int byteFrameNumber = 0;
-     while (byteFrameNumber <= 255) {
-//       // COLOR GRADIENT
-//       writeColor(byteFrameNumber, 0 , 255 - byteFrameNumber);
-         
-         //COLOR WHEEL
-         writePacCol(Wheel(byteFrameNumber));
-         delay(PERIOD);
-         byteFrameNumber++;
-     }
- }
+    while (1) {
+        //     LATA = 0x0000;
+        //     wait_100us();
+        //     
+        //     //RED
+        //     write_1();
+        //     write_1();
+        //     write_1();
+        //     write_1();
+        //     
+        //     write_1();
+        //     write_1();
+        //     write_1();
+        //     write_1();
+        //     
+        //     //GREEN
+        //     write_1();
+        //     write_0();
+        //     write_0();
+        //     write_1();
+        //     
+        //     write_1();
+        //     write_0();
+        //     write_1();
+        //     write_1();
+        //     
+        //     //BLUE
+        //     write_0();
+        //     write_0();
+        //     write_0();
+        //     write_0();
+        //     
+        //     write_0();
+        //     write_0();
+        //     write_0();
+        //     write_0();
+        /*
+            writeColor(255, 155, 000);
+         */
+        int byteFrameNumber = 0;
+        while (byteFrameNumber <= 255) {
+            //       // COLOR GRADIENT
+            //       writeColor(byteFrameNumber, 0 , 255 - byteFrameNumber);
+
+            //COLOR WHEEL
+            writePacCol(Wheel(byteFrameNumber));
+            delay(PERIOD);
+            byteFrameNumber++;
+        }
+    }
 }
 
 void writeColor(int r, int g, int b) {
     write_0();
     wait_100us();
     int i;
-    for(i = 7; i >= 0; i--) {
-	r & (1 << i) ? write_1() : write_0();
+    for (i = 7; i >= 0; i--) {
+        r & (1 << i) ? write_1() : write_0();
     }
-    for(i = 7; i >= 0; i--) {
-	g & (1 << i) ? write_1() : write_0();
+    for (i = 7; i >= 0; i--) {
+        g & (1 << i) ? write_1() : write_0();
     }
-    for(i = 7; i >= 0; i--) {
-	b & (1 << i) ? write_1() : write_0();
+    for (i = 7; i >= 0; i--) {
+        b & (1 << i) ? write_1() : write_0();
     }
 }
 
@@ -126,11 +115,13 @@ uint32_t packColor(unsigned char Red, unsigned char Grn, unsigned char Blu) {
 unsigned char getR(uint32_t RGBval) {
     return (unsigned char) (RGBval >> 16);
 }
+
 unsigned char getG(uint32_t RGBval) {
-    return (unsigned char) (RGBval >> 8 );
+    return (unsigned char) (RGBval >> 8);
 }
+
 unsigned char getB(uint32_t RGBval) {
-    return (unsigned char) (RGBval >> 0 );
+    return (unsigned char) (RGBval >> 0);
 }
 
 void writePacCol(uint32_t PackedColor) {
@@ -138,16 +129,16 @@ void writePacCol(uint32_t PackedColor) {
 }
 
 uint32_t Wheel(unsigned char WheelPos) {
-// Input a value 0 to 255 to get a color value.
-// The colours are a transition r - g - b - back to r.
-  WheelPos = 255 - WheelPos;
-  if(WheelPos < 85) {
-    return packColor(255 - WheelPos * 3, 0, WheelPos * 3);
-  }
-  if(WheelPos < 170) {
-    WheelPos -= 85;
-    return packColor(0, WheelPos * 3, 255 - WheelPos * 3);
-  }
-  WheelPos -= 170;
-  return packColor(WheelPos * 3, 255 - WheelPos * 3, 0);
+    // Input a value 0 to 255 to get a color value.
+    // The colours are a transition r - g - b - back to r.
+    WheelPos = 255 - WheelPos;
+    if (WheelPos < 85) {
+        return packColor(255 - WheelPos * 3, 0, WheelPos * 3);
+    }
+    if (WheelPos < 170) {
+        WheelPos -= 85;
+        return packColor(0, WheelPos * 3, 255 - WheelPos * 3);
+    }
+    WheelPos -= 170;
+    return packColor(WheelPos * 3, 255 - WheelPos * 3, 0);
 }
