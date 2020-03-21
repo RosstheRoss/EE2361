@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=strap012_hw3prob3.c
+SOURCEFILES_QUOTED_IF_SPACED=strap012_hw3prob2.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/strap012_hw3prob3.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/strap012_hw3prob3.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/strap012_hw3prob2.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/strap012_hw3prob2.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/strap012_hw3prob3.o
+OBJECTFILES=${OBJECTDIR}/strap012_hw3prob2.o
 
 # Source Files
-SOURCEFILES=strap012_hw3prob3.c
+SOURCEFILES=strap012_hw3prob2.c
 
 
 
@@ -95,20 +95,20 @@ MP_LINKER_FILE_OPTION=,--script=p24FJ64GA002.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/strap012_hw3prob3.o: strap012_hw3prob3.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/strap012_hw3prob2.o: strap012_hw3prob2.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/strap012_hw3prob3.o.d 
-	@${RM} ${OBJECTDIR}/strap012_hw3prob3.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  strap012_hw3prob3.c  -o ${OBJECTDIR}/strap012_hw3prob3.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/strap012_hw3prob3.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp=${DFP_DIR}/xc16
-	@${FIXDEPS} "${OBJECTDIR}/strap012_hw3prob3.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	@${RM} ${OBJECTDIR}/strap012_hw3prob2.o.d 
+	@${RM} ${OBJECTDIR}/strap012_hw3prob2.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  strap012_hw3prob2.c  -o ${OBJECTDIR}/strap012_hw3prob2.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/strap012_hw3prob2.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp=${DFP_DIR}/xc16
+	@${FIXDEPS} "${OBJECTDIR}/strap012_hw3prob2.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
-${OBJECTDIR}/strap012_hw3prob3.o: strap012_hw3prob3.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/strap012_hw3prob2.o: strap012_hw3prob2.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/strap012_hw3prob3.o.d 
-	@${RM} ${OBJECTDIR}/strap012_hw3prob3.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  strap012_hw3prob3.c  -o ${OBJECTDIR}/strap012_hw3prob3.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/strap012_hw3prob3.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp=${DFP_DIR}/xc16
-	@${FIXDEPS} "${OBJECTDIR}/strap012_hw3prob3.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	@${RM} ${OBJECTDIR}/strap012_hw3prob2.o.d 
+	@${RM} ${OBJECTDIR}/strap012_hw3prob2.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  strap012_hw3prob2.c  -o ${OBJECTDIR}/strap012_hw3prob2.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/strap012_hw3prob2.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp=${DFP_DIR}/xc16
+	@${FIXDEPS} "${OBJECTDIR}/strap012_hw3prob2.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

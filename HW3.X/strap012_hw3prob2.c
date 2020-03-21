@@ -84,11 +84,10 @@ void setup(void)
 
 int main(void)
 {
-    unsigned long int count = 0;
 
     setup();
-
+    int edge = 0;
     while (1) {
-        count++;
+
     }
 }

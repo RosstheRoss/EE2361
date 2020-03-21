@@ -69,10 +69,9 @@ void setup()
 
 int main(void)
 {
-    int count=0;
     setup();
 
     while (1){
-        count++;
+ 
     }
 }

@@ -39,6 +39,7 @@ void setup(void)
     IPC0bits.T1IP = 3;
 
     /* enable Timer 1 interrupt */
+    //DISABLE IF POLLING
     IEC0bits.T1IE = 1;
 
     T1CONbits.TON = 1;
@@ -47,11 +48,10 @@ void setup(void)
 
 int main(void)
 {
-    unsigned long int count = 0;
-
     setup();
-    
     while (1) {
-        count++;
+        //Polling stuff
+//        while (_T1IF == 0);
+//            _T1IF = 0;
     }
 }

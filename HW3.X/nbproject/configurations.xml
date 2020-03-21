@@ -624,7 +624,7 @@
       </Simulator>
       <item path="strap012_hw3prob1.c" ex="true" overriding="false">
       </item>
-      <item path="strap012_hw3prob2.c" ex="true" overriding="false">
+      <item path="strap012_hw3prob2.c" ex="false" overriding="false">
         <C30>
         </C30>
         <C30-AR>
@@ -638,7 +638,7 @@
         <C30Global>
         </C30Global>
       </item>
-      <item path="strap012_hw3prob3.c" ex="false" overriding="false">
+      <item path="strap012_hw3prob3.c" ex="true" overriding="false">
         <C30>
         </C30>
         <C30-AR>
