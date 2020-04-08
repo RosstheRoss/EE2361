@@ -1,0 +1,4 @@
+Maya Steele and Matt Strapp
+Lab 03 Report
+
+There were no issues with the display when it was worked on. The main issue we had with the numpad was caused by accidentally writing to a port instead of a latch. After that, it worked.

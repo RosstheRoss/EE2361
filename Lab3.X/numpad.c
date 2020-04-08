@@ -1,5 +1,5 @@
 #include "xc.h"
-
+#include "numpad.h"
 void initKeyPad(void) {
     AD1PCFG = 0x9fff; //sets all pins to digital I/O
     TRISA = 0b0000000000011111; //set port A to inputs, 
@@ -10,11 +10,11 @@ void initKeyPad(void) {
     CNPU1bits.CN3PUE = 1; //RA1
     CNPU2bits.CN30PUE = 1; //RA2
     CNPU2bits.CN29PUE = 1; //RA3
-//    T1CON = 0;
-//    PR1 = 15999;
-//    TMR1 = 0;
-//    IFS0bits.T1IF = 0;
-//    T1CONbits.TON = 1;
+    T1CON = 0;
+    PR1 = 15999;
+    TMR1 = 0;
+    IFS0bits.T1IF = 0;
+    T1CONbits.TON = 1;
 }
 
 void padDelay(long n) {
@@ -24,6 +24,39 @@ void padDelay(long n) {
 }
 //  1   2   3   4   5       6       7       8
 //  RA0 RA1 RA2 RA3 RB15    RB14    RB13    RB12
+char cycle() {
+    int i = 0;
+    char key = 'N';
+    while (i < 4) {
+        if (i == 0) {
+            LATBbits.LATB12 = 0;
+            LATBbits.LATB13 = 1;
+            LATBbits.LATB14 = 1;
+            LATBbits.LATB15 = 1;
+        } else if (i == 1) {
+            LATBbits.LATB12 = 1;
+            LATBbits.LATB13 = 0;
+            LATBbits.LATB14 = 1;
+            LATBbits.LATB15 = 1;
+        } else if (i == 2) {
+            LATBbits.LATB12 = 1;
+            LATBbits.LATB13 = 1;
+            LATBbits.LATB14 = 0;
+            LATBbits.LATB15 = 1;
+        } else if (i == 3) {
+            LATBbits.LATB12 = 1;
+            LATBbits.LATB13 = 1;
+            LATBbits.LATB14 = 1;
+            LATBbits.LATB15 = 0;
+        }
+        key = readKeyPadRAW();
+        if (key != 'N') {
+            return key;
+        }
+        i++;
+    }
+    return key;
+}
 
 char readKeyPadRAW(void) {
     if ((PORTAbits.RA0 || LATBbits.LATB12) == 0) {

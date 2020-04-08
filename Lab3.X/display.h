@@ -14,7 +14,7 @@ extern "C" {
         LSB = (0b1 << 10)
     };
     void init7seg(void);
-    void showChar7seg(char myChar, enum DIGIT myDigit);
+    void showChar7seg(char myChar, int myDigit);
     void delay(long num);
 
 #ifdef	__cplusplus

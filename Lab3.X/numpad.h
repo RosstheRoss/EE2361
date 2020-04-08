@@ -10,6 +10,7 @@ extern "C" {
     // Insert declarations
     void initKeyPad(void);
     char readKeyPadRAW(void);
+    char cycle();
 
 #ifdef	__cplusplus
 }

@@ -11,60 +11,47 @@ void init7seg(void) {
     LATB = 0x0000; //and all of port B to LOW
 }
 
-void showChar7seg(char myChar, enum DIGIT myDigit) {
-    LATB &= 0x00;
-    switch (myChar) {
-        case '0':
-            LATB ^= (0b11 << 2);
-            break;
-        case '1':
-            LATB ^= (0b10011111 << 2);
-            break;
-        case '2':
-            LATB ^= (0b00100101 << 2);
-            break;
-        case '3':
-            LATB ^= (0b1101 << 2);
-            break;
-        case '4':
-            LATB ^= (0b10011001 << 2);
-            break;
-        case '5':
-            LATB ^= (0b1001001 << 2);
-            break;
-        case '6':
-            LATB ^= (0b1000001 << 2);
-            break;
-        case '7':
-            LATB ^= (0b11111 << 2);
-            break;
-        case '8':
-            LATB ^= (0b1 << 2);
-            break;
-        case '9':
-            LATB ^= (0b1001 << 2);
-            break;
-        case 'A':
-            LATB ^= (0b10001 << 2);
-            break;
-        case 'b':
-            LATB ^= (0b11000001 << 2);
-            break;
-        case 'C':
-            LATB ^= (0b01100011 << 2);
-            break;
-        case 'd':
-            LATB ^= (0b10000101 << 2);
-            break;
-        case 'E':
-            LATB ^= (0b01100001 << 2);
-            break;
-        case 'F':
-            LATB ^= (0b01110001 << 2);
-            break;
-        default:
-            LATB ^= (0b11111111 << 2);
-            break;
-    } //END OF SWITCH
-    LATB |= myDigit;
+void showChar7seg(char myChar, int myDigit)
+{
+    //1,2,3,4,5,6,7,8,9,0,A,b,C,d,E, and F
+    LATB&=0xF000;
+    if (myDigit==1)
+    {
+        if (myChar=='1'){LATB|=0x067F;}
+        else if (myChar=='2'){LATB|=0x0497;}
+        else if (myChar=='3'){LATB|=0x0437;}
+        else if (myChar=='4'){LATB|=0x0667;}
+        else if (myChar=='5'){LATB|=0x0527;}
+        else if (myChar=='6'){LATB|=0x0507;}
+        else if (myChar=='7'){LATB|=0x047F;}
+        else if (myChar=='8'){LATB|=0x0407;}
+        else if (myChar=='9'){LATB|=0x0427;}
+        else if (myChar=='0'){LATB|=0x040F;}
+        else if (myChar=='A'){LATB|=0x0447;}
+        else if (myChar=='b'){LATB|=0x0707;}
+        else if (myChar=='C'){LATB|=0x058F;}
+        else if (myChar=='d'){LATB|=0x0617;}
+        else if (myChar=='E'){LATB|=0x0587;}
+        else if (myChar=='F'){LATB|=0x05C7;}
+    }
+    else if (myDigit==0)
+    {
+        if (myChar=='1'){LATB|=0x0A7F;}
+        else if (myChar=='2'){LATB|=0x0897;}
+        else if (myChar=='3'){LATB|=0x0837;}
+        else if (myChar=='4'){LATB|=0x0A67;}
+        else if (myChar=='5'){LATB|=0x0927;}
+        else if (myChar=='6'){LATB|=0x0907;}
+        else if (myChar=='7'){LATB|=0x087F;}
+        else if (myChar=='8'){LATB|=0x0807;}
+        else if (myChar=='9'){LATB|=0x0827;}
+        else if (myChar=='0'){LATB|=0x080F;}
+        else if (myChar=='A'){LATB|=0x0847;}
+        else if (myChar=='b'){LATB|=0x0B07;}
+        else if (myChar=='C'){LATB|=0x098F;}
+        else if (myChar=='d'){LATB|=0x0A17;}
+        else if (myChar=='E'){LATB|=0x0987;}
+        else if (myChar=='F'){LATB|=0x09C7;}
+    }
+    return;
 }
