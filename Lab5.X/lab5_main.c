@@ -26,12 +26,12 @@ void setup(void) {
 
 int main(void) {
     setup();
-    lcd_setCursor(0, 0);
+    lcd_setCursor(0,0);
     lcd_printStr("Hello");
     lcd_setCursor(2,1);
     lcd_printStr("World!");
     while (1) {
-        delay(500000);
+        delay(300000);
         left();
     }
 }

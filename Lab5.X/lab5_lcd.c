@@ -1,7 +1,9 @@
 #include "xc.h"
 #include "lab5_lcd.h"
 #include "string.h"
-#define CON 32
+//CON should be between 0 and 0xFF.
+#define CON 0x00
+
 //Obligatory delay function
 void delay(long n){
     for (n=n; n>0; n--) {
@@ -31,7 +33,7 @@ void lcd_init(void) {
     lcd_cmd(0b00111000); // function set, normal instruction mode
     lcd_cmd(0b00111001); // function set, extended instruction mode
     lcd_cmd(0b00010100); // interval osc
-    lcd_cmd(0b01110000); // contrast C3-C0
+    lcd_cmd((0b0111 << 4) + CON); // contrast C3-C0
     lcd_cmd(0b01011110); // Ion, Bon, C5-C4
     lcd_cmd(0b01101100); // follower control
     delay(266665);
