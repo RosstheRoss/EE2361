@@ -1,7 +1,7 @@
 #include "xc.h"
-#include "../Lab5.X/lab5_lcd.h"
-#include "circBuffer.h"
 #include <stdio.h>
+#include "../Lab5.X/lab5_lcd.h"
+
 
 #pragma config ICS = PGx1 // Comm Channel Select (Emulator EMUC1/EMUD1 pins are shared with PGC1/PGD1)
 #pragma config FWDTEN = OFF // Watchdog Timer Enable (Watchdog Timer is disabled)
@@ -19,16 +19,15 @@
 
 void setup(void) {
     CLKDIVbits.RCDIV = 0;
-    AD1PCFG = 0x9fff; //all digital inputs and outputs
-    initBuffer();
-    lcd_init();
-    lcd_setCursor(0,0);
+    AD1PCFG = 0x9FFE; //AN1 analog
+    TRISA |= 1;;
     
     // -- I2C STUFF --
     I2C2BRG = 0x9D;
     I2C2CONbits.I2CEN = 1;
     _I2CSIDL = 0;
     IFS3bits.MI2C2IF=0;
+    lcd_init();
     
     // -- ADC STUFF --
     AD1CON1 = 0;    // set all control to 0.
@@ -72,32 +71,22 @@ void setup(void) {
     // T2 Interrupt (Enabled)
 }
 
-volatile unsigned int *ADCpointer = &ADC1BUF0, ADCvalue = 0;
 void __attribute__((__interrupt__, __auto_psv__)) _ADC1Interrupt(void) {
     IFS0bits.AD1IF = 0;
-    
+    //This interrupt only serves to allow the ADC to work as intended.
     
 }
-volatile unsigned char flag = 0;
+unsigned char flag = 0;
 void __attribute__((__interrupt__, __auto_psv__)) _T2Interrupt(void) {
-    //Allow writing to LCD
-    _T2IF = 0;
-    TMR2 = 0;
-    flag = 1;
+    _T2IF = 0; TMR2 = 0;
+    char adStr[20];
+    lcd_setCursor(0,0);
+    sprintf(adStr, "%6.4f V", (3.3/1024)*ADC1BUF0);
+    lcd_printStr(adStr);
 }
 
 int main(void) {
     setup();
-    while (1) {
-        char adStr[20];
-        unsigned long adValue;
-        if (flag) {
-            flag = 0;
-            lcd_setCursor(0,0);
-            adValue = getAvg();
-            sprintf(adStr, "%6.4f V", (3.3/1024)*adValue);
-            lcd_printStr(adStr);
-        }
-    }
+    while (1);
     return -1;
 }

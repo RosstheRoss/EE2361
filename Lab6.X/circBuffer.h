@@ -7,8 +7,8 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif /* __cplusplus */
-void putVal(int newValue);  // add a new value to the buffer
-int getAvg();               // average all buffer vals
+void putVal(long newValue);  // add a new value to the buffer
+long getAvg();               // average all buffer vals
 void initBuffer();          // set all buffer vals to zero
     
 #ifdef	__cplusplus
