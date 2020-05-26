@@ -1,2 +1,4 @@
 # EE2361Projects
-A repo with all of the MPLAB stuff to make this easier to deal with
+Old repository of all the MPLAB projects I used for EE 2361, Spring 2020.
+
+
